@@ -1,0 +1,91 @@
+class Solution {
+    //transaction fee for selling
+    public int maxProfit(int[] prices, int fee) {
+        //see notes-> old buying state,old selling state
+        //either continue or use opposite states to compute
+        int obsp = -prices[0];
+        int ossp = 0;
+        
+        //for loop for new states
+        for(int i=1;i<prices.length;i++)
+        {
+           //new selling and buying states are always initialised with 0
+            int nbsp = 0;
+            int nssp = 0;
+            
+            //nbsp
+            //comparision between negative numbers
+            
+            if(obsp > ossp-prices[i])
+            {
+                nbsp = obsp;
+            }
+            else{
+                nbsp = ossp-prices[i]; 
+            }
+            
+            if(ossp > prices[i]+obsp-fee)
+            {
+                nssp = ossp;
+            }
+            else
+            {
+                nssp =prices[i]+obsp-fee ;
+            }
+            
+            obsp = nbsp;
+            ossp = nssp;
+            
+            
+        }
+        
+        return ossp;
+        
+        
+    }
+}
+
+
+
+
+//infinite transaction code can't be used as it takes every rise sum 
+//hence local maxima - local minima
+//but here transaction fees is charged every transaction so not immediate local maxima can be used
+class Solution2 {
+    public int maxProfit(int[] prices, int fee) {
+        
+        int tp = 0; //total profit
+        int sp = 0; //sell pointer
+        int bp  =0; //buy pointer
+        boolean flag = true;
+        //tip -> if i+1 loop gives index out of bound error use i-1 loop
+        //calculate profit before dip ride BP and SP fixed not when SP moving
+        
+        for(int i =1;i<prices.length;i++)
+        {
+            if(prices[i]>prices[i-1]) //on rise move sp alone
+            {
+                sp++;
+                flag = true;
+            }
+            else // when dip ride
+            {
+                //just dip hit so calculate
+                if(flag){
+                    System.out.println(bp+" "+sp);
+                tp += prices[sp]-prices[bp]-fee;
+                    flag = false;
+                    
+                }
+                ///now make them together during dip ride so that even if else loop runs 0 gets added
+                bp = sp = i;
+            }
+        }
+        //last uphill ride calculation left
+        tp += prices[sp]-prices[bp]-fee;
+        
+        return tp;       
+        
+        
+    }
+}

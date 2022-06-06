@@ -1,0 +1,31 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        //kadane's algo see notes
+        //csum is current best sum at that position if previously negative values then new chain
+        //overall sum always compared with csum if better then updated
+        int csum = nums[0];
+        int bsum = nums[0];
+        
+        for(int i=1;i<nums.length;i++)
+        {
+            
+            
+            if(csum>0)
+            {
+                csum+=nums[i];
+            }
+            else
+                csum = nums[i];
+            
+            if(bsum<csum)
+            {
+                bsum = csum;
+            }
+            
+            
+            
+        }
+        
+        return bsum;
+    }
+}

@@ -1,0 +1,32 @@
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        // sum, frequency
+        
+        hm.put(0,1); //sum=0, frequency =1  as if sum is found where 0th index is involved
+        
+        int sum = 0;
+        int freq = 0;
+        //at every point when sum till the current element is calculated, the remaining sum is calculated and checked whether the hashmap has a frequqncy value correwsponding to it , if yes then ans is incremented anyway the new sum or required sum frequency is updated in the hashmap
+        
+        for(int i=0;i<nums.length;i++)
+        {
+            //x+k
+            sum+=nums[i];
+            //remaining sum
+            //x+k - k -> to get index from where k sum starts
+            int rsum = sum -  k;
+            
+            if(hm.containsKey(rsum)) //if required sum matches
+            {
+                freq  += hm.get(rsum); //will give the latest frequency of the rsum occurence
+            }
+            //update the map with sum and frequency
+            hm.put(sum,hm.getOrDefault(sum,0)+1); //if freq==0 then become 1
+        }
+        
+        return freq;
+        
+        
+    }
+}

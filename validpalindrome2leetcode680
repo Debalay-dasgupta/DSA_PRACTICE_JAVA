@@ -1,0 +1,105 @@
+//can use recursion also to check palindrome
+class Solution {
+    public boolean validPalindrome(String s) {
+        //use left++,right-- or else TLE exceeded 
+        //where character not matching check two cases
+        //substring 1 without left and one without right
+        String s1 = s;
+        int left = 0;
+        int right = s1.length()-1;
+        while(left<right)
+        {
+            if(s1.charAt(left)!=s1.charAt(right))
+            {
+                String sl  = s1.substring(left,right);
+                String sr = s1.substring(left+1,right+1);
+                StringBuilder sbl = new StringBuilder(sl);
+                StringBuilder sbr = new StringBuilder(sr);
+                return (sbl.reverse().toString().equals(sl) || sbr.reverse().toString().equals(sr) );
+                
+            }
+            
+            left++;
+            right--;
+        }
+        
+        return true;
+        
+    }
+}
+
+class Solution2{
+    //"eccer", "deeee"
+    //tried all edge cases to fit in  but failed miserably
+    public boolean validPalindrome(String s) {
+        
+        String s1 = s;
+        int left = 0;
+        int right = s1.length()-1;
+        
+       // boolean flag  = true
+        while(left<right)
+        {
+            if(s1.charAt(left)!=s1.charAt(right))
+            {
+                System.out.println(left+" "+right);
+                //"eccer fails"
+                int temp = left+1;
+                int te = right-1;
+                if(right-left==1)
+                {
+                    return true;
+                }
+                //delete which one left or right one
+                
+               else if(s1.charAt(temp)==s1.charAt(left))
+                {
+                    StringBuilder sb = new StringBuilder(s1);
+                    sb.deleteCharAt(right);
+                    return  sb.reverse().toString().equalsIgnoreCase(sb.toString());
+                  
+                }
+                else if(s1.charAt(temp)==s1.charAt(right))
+                {
+                   
+                    StringBuilder sb = new StringBuilder(s1);
+                    sb.deleteCharAt(left);
+                   
+                    return  sb.reverse().toString().equalsIgnoreCase(sb.toString());
+                    
+                }
+                else if(s1.charAt(te)==s1.charAt(left))
+                {
+                    StringBuilder sb = new StringBuilder(s1);
+                    sb.deleteCharAt(right);
+                    return  sb.reverse().toString().equalsIgnoreCase(sb.toString());
+                  
+                }
+                else if(s1.charAt(te)==s1.charAt(right))
+                {
+                   
+                    StringBuilder sb = new StringBuilder(s1);
+                    sb.deleteCharAt(left);
+                   
+                    return  sb.reverse().toString().equalsIgnoreCase(sb.toString());
+                    
+                }
+                
+                
+                
+                else
+                {
+                    return false;
+                }
+                
+            }
+            
+            left++;
+            right--;
+            
+        }
+        
+        
+      return true;  
+    }
+}

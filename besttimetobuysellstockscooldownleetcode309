@@ -1,0 +1,58 @@
+class Solution {
+    //refer notes table
+    //buying col affected by buying(same) or cooldown col
+    //cooldown col affected by cooldown or ossp
+    //nssp affected by ossp or obsp
+    public int maxProfit(int[] prices) {
+     
+        int obsp = -prices[0];
+        int ossp = 0;
+        int ocsp = 0;
+        
+        for(int i=1;i<prices.length;i++)
+        {
+            //new initialized
+            int ncsp = 0;
+            int nbsp = 0;
+            int nssp = 0;
+            
+            //nbsp buy - > buy /cool
+            if(obsp > ocsp-prices[i])
+            {
+                nbsp = obsp;
+            }
+            else{
+                
+                nbsp = ocsp-prices[i];
+                
+            }
+            
+            //nssp sell - > sell/ buy
+            if(ossp > prices[i]+obsp)
+            {
+                nssp = ossp;
+            }
+            else
+            {
+                nssp = obsp+prices[i];
+            }
+            
+            //ncsp cool - > cool/sell
+            if(ocsp>ossp)
+            {
+                ncsp = ocsp; 
+            }
+            else
+            {
+                ncsp = ossp;
+            }
+            
+            ocsp = ncsp;
+            obsp = nbsp;
+            ossp = nssp;
+        
+        }
+        
+        return ossp;
+    }
+}

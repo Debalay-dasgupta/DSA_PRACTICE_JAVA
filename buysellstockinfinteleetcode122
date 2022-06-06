@@ -1,0 +1,83 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        
+        int tp = 0; //total profit
+        int sp = 0; //sell pointer
+        int bp  =0; //buy pointer
+        //tip -> if i+1 loop gives index out of bound error use i-1 loop
+        //calculate profit before dip ride BP and SP fixed not when SP moving
+        
+        for(int i =1;i<prices.length;i++)
+        {
+            if(prices[i]>prices[i-1]) //on rise move sp alone
+            {
+                sp++;
+            }
+            else // when dip ride
+            {
+                //just dip hit so calculate
+                tp += prices[sp]-prices[bp];
+                ///now make them together during dip ride so that even if else loop runs 0 gets added
+                bp = sp = i;
+            }
+        }
+        //last uphill ride calculation left
+        tp += prices[sp]-prices[bp];
+        
+        return tp;       
+        
+        
+    }
+}
+
+class Solution2 {
+    //check later why index out of bounds
+    //can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.
+    public int maxProfit(int[] prices){
+        
+        int lcp = Integer.MAX_VALUE; //least cost 
+        int bp = prices[0]; //buy pointer
+        int sp = prices[0]; //sell pointer
+        int tp = 0; //total profit
+        for(int i=0;i<prices.length;i++)
+        {
+                          
+                System.out.println("for "+i);
+                
+            //increase slope so sp ride alone
+               if(i+1<prices.length){
+            while(prices[i+1]>=prices[i] && i+1<prices.length)
+            {
+                System.out.println(sp);
+                sp = prices[i+1];
+                i++;
+            }
+               }
+            
+            tp = sp-bp;
+            
+            if(i+1<prices.length){
+            while(prices[i+1]<prices[i] && i+1<prices.length)
+            {
+                
+                //System.out.println(sp);
+                sp = prices[i+1];
+                bp = prices[i+1];
+                i++;
+            }
+
+            }
+                            System.out.println(bp+" "+sp);
+                System.out.println(i);
+              
+                System.out.println("tp "+tp);
+                
+                
+                
+            
+        }
+        
+        return tp;
+        
+    }
+}

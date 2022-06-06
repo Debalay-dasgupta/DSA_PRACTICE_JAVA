@@ -1,0 +1,28 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        //DP as maintain record of small cases
+        //compare profit at each day eith max profit
+        //least cost so far -> min CP before that buying date
+        int lsf = Integer.MAX_VALUE;//update least cost after comparing with daily prices
+        int best = 0; //best progit till date ->to be compared with profit each day
+        int ptd = 0; //profit that day
+        for(int i =0;i<prices.length;i++)
+        {
+            //current stock cp is less than least cp so far
+            if(prices[i]<lsf)
+            {
+                lsf = prices[i];
+            }
+            
+            //profit that day - > current cp - least cp
+            ptd = prices[i]-lsf;
+            //if current profit is better than best profit
+            if(ptd>best)
+            {
+                best = ptd;
+            }
+            
+        }
+        
+        return best;
+        
