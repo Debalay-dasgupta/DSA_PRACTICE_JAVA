@@ -1,0 +1,68 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+
+
+public class Solution {
+    //hasCycle function has been changed to finding the poistion of intersection of fast and slow
+    public ListNode slowPos(ListNode head) {
+        
+        //in linkedlist check for null or single node
+        
+        if(head==null || head.next==null)
+            return null;
+        //pointing 2x spped node and 1x speed node at head
+        ListNode fast = head;
+        ListNode slow = head;
+        
+        //check whether fast on null or the next node is null because fast moves 2x hence can end up on null or any node but never on anything next to null node
+        
+        while(fast!=null && fast.next!=null)
+        {
+            fast = fast.next.next;
+            slow  =  slow.next;
+            
+           //slow and fast pointer meets
+            
+            if(fast==slow)
+                return slow;
+        }
+        // fast must have reached end of the linkedlist
+        return null;
+    }
+    
+    public ListNode detectCycle(ListNode head) {
+        
+      //position of slow pointer is received
+        ListNode slow = slowPos(head);
+        //if null is returned that means no cycle
+        //equivalent to false condition in hasCycle
+        if(slow !=null)
+        {
+           //temp pointer ket at head and is moved at 1 x along with slow pointer
+            //the point where they meet is the start of a cycle
+            ListNode temp = head;
+            
+            while(slow!=temp)
+            {
+                temp = temp.next;
+                slow = slow.next;
+            }
+            
+            return temp;
+            
+        }
+        
+        return null;
+        
+    }
+}

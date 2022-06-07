@@ -1,0 +1,39 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+//solution 1 = hash of every node
+//solution 2  = visited of every node
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        
+        //in linkedlist check for null or single node
+        
+        if(head==null || head.next==null)
+            return false;
+        //pointing 2x spped node and 1x speed node at head
+        ListNode fast = head;
+        ListNode slow = head;
+        
+        //check whether fast on null or the next node is null because fast moves 2x hence can end up on null or any node but never on anything next to null node
+        
+        while(fast!=null && fast.next!=null)
+        {
+            fast = fast.next.next;
+            slow  =  slow.next;
+            
+            if(fast==slow)
+                return true;
+        }
+        // fast must have reached end of the linkedlist
+        return false;
+    }
+}

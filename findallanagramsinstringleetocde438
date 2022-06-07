@@ -1,0 +1,98 @@
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        
+        
+        List<Integer> lst = new LinkedList<>();
+        
+        //adding an edge case where pattern length surpasses string length
+        if(s.length()<p.length())
+            return lst;
+        
+        
+        //create two hashmaps for string and pattern
+        HashMap<Character,Integer> pmap = new HashMap<>();
+        HashMap<Character,Integer> smap = new HashMap<>();
+        //make anagram frequency of pattern
+        for(int i=0;i<p.length();i++)
+        {
+            char ch = p.charAt(i);
+            pmap.put(ch, pmap.getOrDefault(ch,0)+1);
+        }
+        
+        //fix window and make frequency map of source string of pattern length on loop and compare hashmaps
+      //  System.out.println("s "+s.length());
+        
+        //the below for loop will give TLE error because it does not follow acquire and release rule in sliding window and always takes k numbers
+//         for(int i=0;i<s.length();i++)
+//         {
+            
+//             smap.clear();
+//             for(int j=0;j<p.length()&&i+j<s.length();j++)
+//             {
+                
+//                 char ch = s.charAt(i+j);
+//             smap.put(ch, smap.getOrDefault(ch,0)+1);
+//             }
+           
+//             if(smap.equals(pmap)==true)
+//             {
+//                 lst.add(i);
+//             }
+//            // System.out.println("i "+i);
+            
+            
+//         }
+        
+        //for aquire and release prepare smap before and then apply acquire and release on that
+        
+       for(int i=0;i<p.length();i++)
+        {
+            char ch = s.charAt(i);
+            smap.put(ch, smap.getOrDefault(ch,0)+1);
+        }
+        
+        //now apply acquire and release
+        
+        int i=p.length();
+        
+        while(i<s.length())
+        {
+            if(smap.equals(pmap)==true)
+            {
+                lst.add(i-p.length());
+                
+            }
+            
+           
+            
+            //acquire
+            
+            char cha = s.charAt(i);
+            smap.put(cha, smap.getOrDefault(cha,0)+1);
+            
+            //release
+            
+            char chr = s.charAt(i-p.length());
+                
+            if(smap.get(chr)==1)
+            {
+                smap.remove(chr);
+            }
+            else
+            {
+                smap.put(chr,smap.get(chr)-1);
+            }
+            
+            i++;
+        }
+        
+    //one last compare will be left
+       if(smap.equals(pmap)==true)
+            {
+                lst.add(i-p.length());
+            } 
+        
+        
+        return lst;
+    }
+}

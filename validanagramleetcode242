@@ -1,0 +1,44 @@
+class Solution {
+    //check frequency mapping
+    public boolean isAnagram(String s, String t) {
+        
+        HashMap<Character,Integer> map = new HashMap<>();
+        
+        for(int i=0;i<s.length();i++)
+        {
+           
+            map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0)+1);
+        }
+        
+        //now for string 2 if any character not present in hashmap then false if not then reduce frequncy of the occurence of the character
+        
+        for(int i=0;i<t.length();i++)
+        {
+            char ch = t.charAt(i);
+            
+            if(map.containsKey(ch)==false)
+            {
+                return false;
+            }
+            
+            //if only single frequency left then delete the character key
+            if(map.get(ch)==1)
+            {
+                map.remove(ch);
+            }
+            
+            else
+            {
+                map.put(ch,map.get(ch)-1);
+            }
+        }
+        
+        //don't return in if condito better appraoch below
+//         if(map.size()==0)
+//             return true;
+        
+       //finally map should be empty
+        return map.size()==0;
+        
+    }
+}

@@ -1,0 +1,112 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+
+class Solution {
+    //recursive solution
+    //solve for the first node only then belive that the function will solve for the rest
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        
+      //use logic for first node
+        //whether the given first node is null or not 
+        //if one is null then return the other
+        if(list1==null)
+        {
+            return list2;
+        }
+        
+        if(list2 == null)
+        {
+            return list1;
+        }
+        
+        //if not null case then normally compare the values and let the recursion do the magic for the next ones.
+        if(list1.val<list2.val)
+        {
+            //part of expectation that it will handle for the rest
+            list1.next = mergeTwoLists(list1.next,list2);
+            return list1;
+        }
+        
+        else
+        {
+           //part of expectation that it will handle for the rest
+            list2.next = mergeTwoLists(list1,list2.next);
+            return list2;
+        }
+        
+           
+        
+        
+    }
+}
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+
+
+class Solution2 {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        
+        //provided with head nodes of both
+        ListNode ptr1 = list1;
+        ListNode ptr2 = list2;
+        
+        ListNode head = new ListNode(0); //head of linkedlist with value 0, new additions after this
+        //return head.next as head has 0 
+        ListNode temp = head; //points to head of linkedlist and functions on this
+        
+        while(ptr1!=null && ptr2!=null)
+        {
+            if(ptr1.val>ptr2.val)
+            {
+              
+                temp.next = ptr2; //as ptr2 is a node hence can directly point to that and it contains value too
+                ptr2 = ptr2.next;
+                temp = temp.next;
+            }
+            else
+            {
+              
+                temp.next = ptr1;
+                ptr1 = ptr1.next;
+                temp = temp.next;
+            }
+        }
+       //when any one of the list reaches null 
+       while(ptr1!=null)
+       {
+        
+           temp.next = ptr1;
+           ptr1 = ptr1.next;
+           temp = temp.next;
+       }
+        while(ptr2!=null)
+       {
+            temp.next = ptr2;
+            ptr2 = ptr2.next;
+           temp = temp.next;
+       }
+        
+        return head.next;//because from here the list starts
+        
+    }
+}

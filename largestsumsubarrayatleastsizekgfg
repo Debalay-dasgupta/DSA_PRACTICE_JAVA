@@ -1,0 +1,83 @@
+
+//https://practice.geeksforgeeks.org/problems/largest-sum-subarray-of-size-at-least-k3121/1
+class Compute {
+    //ateast K not exact
+    //sum of k size window and then sum before that point whether to add or not
+    public long maxSumWithK(long a[], long n, long k)
+    {
+       int k1 = (int)k;
+      // System.out.println(k1);
+       
+        long csum = a[0];
+       //long bsum = 0;
+        long ans = Integer.MIN_VALUE;
+        //long ksum = 0;
+        long[]  maxsum = new long[a.length];
+        maxsum[0] = csum;
+        
+        //maintain maxsum at every position
+        for(int i=1;i<a.length;i++)
+        {
+            
+            if(csum<0)
+            {
+                csum = a[i];
+            }
+            else
+            {
+                csum += a[i];
+            }
+            
+            //or Math.max(csum,csum+a[i])
+            
+            // if(bsum<csum)
+            // {
+            //     bsum = csum;
+            // }
+            
+            maxsum[i] = csum;
+        }
+         //exact window sum  for first k elements 
+            long ksum = 0;
+            for(int j=0;j<k1;j++)
+            {
+                ksum += a[j];
+            }
+            
+            //update ans
+            if(ksum>ans)
+            {
+                ans = ksum;
+            }
+            
+            //max is already present at every element
+            //for first k done now continue this till end of arr just slide the window
+            for(int i=k1;i<a.length;i++)
+            {
+                ksum = ksum + a[i]-a[i-k1]; //window shifted
+                
+                if(ksum>ans)
+                {
+                    ans = ksum;
+                }
+                
+                //missed this logic
+           //this part left as till noow only exact k elements were considered
+            //for atleast k element sum add the maxsum till previous element
+            
+            if(ans < maxsum[i-k1]+ksum)
+            {
+                ans= maxsum[i-k1]+ksum;
+            }
+                
+            }
+            
+          
+            
+            
+          return ans;
+            
+        }
+        
+    }
+
