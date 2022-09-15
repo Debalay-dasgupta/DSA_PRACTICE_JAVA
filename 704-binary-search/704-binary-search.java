@@ -5,7 +5,7 @@ class Solution {
         int lo = 0;
         int hi = n-1;
         
-        
+        //
         while(lo<=hi) //forget sometimes
         {
             int mid = (lo+hi )/2;
